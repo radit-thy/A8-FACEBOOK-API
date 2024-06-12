@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,5 @@ Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 //     Route::post('/logout', [AuthController::class, 'logout']);
 //     Route::post('/refresh', [AuthController::class, 'refresh']);
 // });
+// ---------------------------Logout Route-------------------------------------
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
