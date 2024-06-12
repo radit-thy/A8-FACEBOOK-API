@@ -72,7 +72,7 @@ class AuthController extends Controller
         $user = $request->user();
         if ($user) {
             $user->tokens()->delete();
-            return response()->json(['message' => 'Successfully logged out'], 200);
+            return response()->json(['data'=>$user,'message' => 'Successfully logged out'], 200);
         } else {
             return response()->json(['message' => 'User not authenticated'], 500);
         }
