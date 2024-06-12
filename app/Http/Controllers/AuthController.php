@@ -9,31 +9,43 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    
-    public function login(Request $request){
+    //---------------- login ------------------------------------------------
+    public function login(Request $request)
+    {
         $request->validate([
-            "email"=>'required',
+            "email" => 'required',
             "password" => 'required'
         ]);
         $user = User::where('email', $request->email)->first();
-        if(!$user){
+        if (!$user) {
             return response([
-                'message'=>'User not found',
-                'success'=>false,
+                'message' => 'User not found',
+                'success' => false,
 
             ]);
         }
 
-        if(Hash::check($request->password, $user->password)){
+        if (Hash::check($request->password, $user->password)) {
             $access_token = $user->createToken('authToken')->plainTextToken;
             return response([
-                'message'=>'Login successful',
-                'success'=>true,
-                'user'=>$user,
-                'access_token'=>$access_token,
+                'message' => 'Login successful',
+                'success' => true,
+                'user' => $user,
+                'access_token' => $access_token,
 
             ]);
         }
-        
+    }
+
+    //---------------- Log the user out of the application ------------------------------------------------
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        if ($user) {
+            $user->tokens()->delete();
+            return response()->json(['message' => 'Successfully logged out'], 200);
+        } else {
+            return response()->json(['message' => 'User not authenticated'], 500);
+        }
     }
 }
