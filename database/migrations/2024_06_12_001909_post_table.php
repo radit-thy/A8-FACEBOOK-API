@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string("image_url");
+            $table->string("title");
             $table->string("description");
             $table->foreignId("user_id")->constrained(table:"users")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }
+
+    
 
     /**
      * Reverse the migrations.
