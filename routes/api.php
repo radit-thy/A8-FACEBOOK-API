@@ -5,6 +5,7 @@ use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,7 @@ Route::post('/post', [PostController::class, 'create']);
 Route::put('/edit', [PostController::class, 'update']);
 Route::delete('/delete/{id}', [PostController::class, 'destroy']);
 Route::get('/getpost/{id}', [AuthController::class, 'getpost'])->middleware('auth:sanctum');
+
+// ..................Profile Router............................
+Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
