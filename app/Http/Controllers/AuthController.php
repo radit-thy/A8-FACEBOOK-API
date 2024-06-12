@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     //
     // ======================================================
-    //                 Registeration
+    //          Registeration to create an account
     // ======================================================
     public function register(Request $request)
     {
