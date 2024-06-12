@@ -15,13 +15,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Post::all();
     }
 
     public function create(Request $request, Post $post)
     {
         $post = new Post();
         $post->title = $request->title;
+        $post->description = $request->description;
         $post->user_id = $request->user_id;
         $post->save();
         return response()->json(["success"=>true, "data"=>$post],200);
@@ -39,8 +40,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(string $id)
     {
-        //
+        $delete = Post::find($id);
+        $delete->delete();
+        return response($delete);
     }
 }
