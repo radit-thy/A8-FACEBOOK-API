@@ -33,3 +33,4 @@ Route::get('/posts', [PostController::class, 'index']);
 Route::post('/post', [PostController::class, 'create']);
 Route::put('/edit', [PostController::class, 'update']);
 Route::delete('/delete/{id}', [PostController::class, 'destroy']);
+Route::get('/getpost/{id}', [AuthController::class, 'getpost'])->middleware('auth:sanctum');

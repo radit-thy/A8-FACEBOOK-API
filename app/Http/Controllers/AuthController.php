@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Post;
 
 class AuthController extends Controller
 {
@@ -73,6 +74,21 @@ class AuthController extends Controller
         if ($user) {
             $user->tokens()->delete();
             return response()->json(['data'=>$user,'message' => 'Successfully logged out'], 200);
+        } else {
+            return response()->json(['message' => 'User not authenticated'], 500);
+        }
+    }
+    public function getpost(Request $request, string $id){
+        $user = $request->user();
+        if ($user) {
+            $post = Post::where('user_id', $user->id)->get();
+            for($i=0; $i<count($post); $i++) {
+                if($post[$i]->id == $id){
+                    return response()->json(["success"=>true, "data"=>$post[$i]],200);
+                }
+            return response()->json(['message' => 'Post id not found'], 500);
+
+            };
         } else {
             return response()->json(['message' => 'User not authenticated'], 500);
         }
