@@ -25,4 +25,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 
 
-Route::resource('posts', PostController::class);  
+// Route::resource('posts', PostController::class);  
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'create']);
+Route::put('/edit', [PostController::class, 'update']);
+Route::delete('/delete', [PostController::class, 'delete']);
