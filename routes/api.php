@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/login', [AuthController::class, 'login']);
+// ---------------------------Logout Route-------------------------------------
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
@@ -34,11 +36,11 @@ Route::get('/posts', [PostController::class, 'index']);
 Route::post('/post', [PostController::class, 'create']);
 Route::put('/edit', [PostController::class, 'update']);
 Route::delete('/delete/{id}', [PostController::class, 'destroy']);
-Route::get('/getpost/{id}', [AuthController::class, 'getpost'])->middleware('auth:sanctum');
+
+Route::get('/getpost/{id}', [PostController::class, 'getpost'])->middleware('auth:sanctum');
+Route::get('/postlist/{user_id}', [PostController::class, 'postlist'])->middleware('auth:sanctum');
 
 // ..................Profile Router............................
 Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:sanctum');
 Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
-// ---------------------------Logout Route-------------------------------------
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('/postlist/{user_id}', [AuthController::class, 'postlist'])->middleware('auth:sanctum');
+
