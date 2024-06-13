@@ -78,19 +78,5 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not authenticated'], 500);
         }
     }
-    public function getpost(Request $request, string $id){
-        $user = $request->user();
-        if ($user) {
-            $post = Post::where('user_id', $user->id)->get();
-            for($i=0; $i<count($post); $i++) {
-                if($post[$i]->id == $id){
-                    return response()->json(["success"=>true, "data"=>$post[$i]],200);
-                }
-            return response()->json(['message' => 'Post id not found'], 500);
-
-            };
-        } else {
-            return response()->json(['message' => 'User not authenticated'], 500);
-        }
-    }
+    
 }
