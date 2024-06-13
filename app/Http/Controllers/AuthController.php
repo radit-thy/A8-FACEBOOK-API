@@ -100,7 +100,7 @@ class AuthController extends Controller
        
         $post = Post::where('user_id', $id)->get();
         if(count($post) == 0){
-            return response()->json(['message' => 'Post id not found'], 500);
+            return response()->json(['message' => 'user id not found'], 500);
         }
         return response()->json(["success"=>true, "data"=>$post],200);
     }
