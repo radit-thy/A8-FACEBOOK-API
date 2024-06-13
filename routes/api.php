@@ -41,3 +41,10 @@ Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:
 Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
 // ---------------------------Logout Route-------------------------------------
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+
+
+// //===================================================================
+                        //    like router  //
+// //===================================================================
+
