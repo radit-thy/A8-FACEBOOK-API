@@ -47,4 +47,8 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 // //===================================================================
                         //    like router  //
 // //===================================================================
+Route::post('/like', [PostController::class, 'likePost'])->middleware('auth:sanctum');
+Route::post('/unlike', [PostController::class, 'UnlikePost'])->middleware('auth:sanctum');
+Route::get('/getlikes/{id}', [PostController::class, 'getlikes'])->middleware('auth:sanctum');
+
 
