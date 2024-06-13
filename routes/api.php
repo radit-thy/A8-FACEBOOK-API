@@ -41,3 +41,4 @@ Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:
 Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
 // ---------------------------Logout Route-------------------------------------
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/postlist/{user_id}', [AuthController::class, 'postlist'])->middleware('auth:sanctum');
