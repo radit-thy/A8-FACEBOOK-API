@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,10 @@ Route::get('/postlist/{user_id}', [PostController::class, 'postlist'])->middlewa
 Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:sanctum');
 Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
 
+
+
+// ..................Comment Router............................
+Route::prefix('comments')->group(function () {
+    Route::get('/comments', [CommentController::class, 'index']);
+    Route::post('/create', [CommentController::class, 'create']);
+});
