@@ -24,8 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// ---------------------------log in, Logout Route-------------------------------------
 Route::post('/login', [AuthController::class, 'login']);
-// ---------------------------Logout Route-------------------------------------
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -33,12 +33,11 @@ Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 
 
 // ..................Posts Router............................ 
-Route::prefix('comments')->group(function () {
+Route::prefix('posts')->group(function () {
     Route::get('/posts', [PostController::class, 'index']);
     Route::post('/post', [PostController::class, 'create']);
     Route::put('/edit', [PostController::class, 'update']);
-    Route::delete('/delete/{id}', [PostController::class, 'destroy']);
-    
+    Route::delete('/delete/{id}', [PostController::class, 'destroy']);   
     Route::get('/getpost/{id}', [PostController::class, 'getpost'])->middleware('auth:sanctum');
     Route::get('/postlist/{user_id}', [PostController::class, 'postlist'])->middleware('auth:sanctum');
 });
