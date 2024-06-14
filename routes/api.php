@@ -33,13 +33,15 @@ Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 
 
 // ..................Posts Router............................ 
-Route::get('/posts', [PostController::class, 'index']);
-Route::post('/post', [PostController::class, 'create']);
-Route::put('/edit', [PostController::class, 'update']);
-Route::delete('/delete/{id}', [PostController::class, 'destroy']);
-
-Route::get('/getpost/{id}', [PostController::class, 'getpost'])->middleware('auth:sanctum');
-Route::get('/postlist/{user_id}', [PostController::class, 'postlist'])->middleware('auth:sanctum');
+Route::prefix('comments')->group(function () {
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::post('/post', [PostController::class, 'create']);
+    Route::put('/edit', [PostController::class, 'update']);
+    Route::delete('/delete/{id}', [PostController::class, 'destroy']);
+    
+    Route::get('/getpost/{id}', [PostController::class, 'getpost'])->middleware('auth:sanctum');
+    Route::get('/postlist/{user_id}', [PostController::class, 'postlist'])->middleware('auth:sanctum');
+});
 
 // ..................Profile Router............................
 Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:sanctum');

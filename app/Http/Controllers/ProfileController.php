@@ -45,9 +45,6 @@ class ProfileController extends Controller
             'data' => $pl,
         ]);
 
-        // return Str::random(30).".".$request->image->getClientOriginalExtension();
-
-
     }
 
 
@@ -81,11 +78,4 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Profile $profile)
-    {
-        //
-    }
 }
