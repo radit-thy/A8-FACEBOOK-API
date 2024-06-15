@@ -70,3 +70,4 @@ Route::prefix('comments')->group(function () {
     Route::get('/comments', [CommentController::class, 'index']);
     Route::post('/create', [CommentController::class, 'create']);
 });
+Route::get('/viewProfile/{id}', [ProfileController::class, 'index'])->middleware('auth:sanctum');
