@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,8 +52,12 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 // //===================================================================
                         //    like router  //
 // //===================================================================
-Route::post('/like', [PostController::class, 'likePost'])->middleware('auth:sanctum');
-Route::post('/unlike', [PostController::class, 'UnlikePost'])->middleware('auth:sanctum');
-Route::get('/getlikes/{id}', [PostController::class, 'getlikes'])->middleware('auth:sanctum');
+Route::prefix('likes')->group(function () {
+    Route::post('/', [LikeController::class, 'index'])->middleware('auth:sanctum');
+    Route::post('/like-post', [LikeController::class, 'likePost'])->middleware('auth:sanctum');
+    Route::post('/unlike', [LikeController::class, 'UnlikePost'])->middleware('auth:sanctum');
+    Route::post('/delete-like', [LikeController::class, 'destroyPost'])->middleware('auth:sanctum');
+});
+
 
 

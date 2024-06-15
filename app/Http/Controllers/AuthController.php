@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -19,24 +20,23 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'      =>'required|string|max:255',
+            'name'      => 'required|string|max:255',
             'email'     => 'required|string|max:255|unique:users',
             'password'  => 'required|string'
-          ]);
+        ]);
 
         if ($validator->fails()) {
-            return response()->json(["message"=>$validator->errors()],500);
+            return response()->json(["message" => $validator->errors()], 500);
         }
-        $name=$request->get("name");
-        $email=$request->get("email");
-        $password=$request->get("password");
-        $isRegister=User::create(["name"=>$name,"email"=>$email,"password"=>$password]);
-        if($isRegister){
-            return response(["data"=>$isRegister,"message"=>"Register has been successfuly"],200);
-        }else{
-            return response(["data"=>$isRegister,"message"=>"Register is not successfuly"],500);
+        $name = $request->get("name");
+        $email = $request->get("email");
+        $password = $request->get("password");
+        $isRegister = User::create(["name" => $name, "email" => $email, "password" => $password]);
+        if ($isRegister) {
+            return response(["data" => $isRegister, "message" => "Register has been successfuly"], 200);
+        } else {
+            return response(["data" => $isRegister, "message" => "Register is not successfuly"], 500);
         }
-
     }
 
     //---------------- log the user in the application------------------------------------------------
@@ -73,10 +73,9 @@ class AuthController extends Controller
         $user = $request->user();
         if ($user) {
             $user->tokens()->delete();
-            return response()->json(['data'=>$user,'message' => 'Successfully logged out'], 200);
+            return response()->json(['data' => $user, 'message' => 'Successfully logged out'], 200);
         } else {
             return response()->json(['message' => 'User not authenticated'], 500);
         }
     }
-    
 }
