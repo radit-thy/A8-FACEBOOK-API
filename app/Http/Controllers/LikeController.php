@@ -70,11 +70,30 @@ class LikeController extends Controller
     /**
      * Display the specified resource.
      */
+    public function showLike(Like $like, $post_id)
+    {
+        //
+        //  // Validate the post_id
+        //  if (!\App\Models\Post::find($post_id)) {
+        //     return response()->json(['message' => 'Post not found'], 404);
+        // }
+
+        // // Retrieve likes for the post
+        // $likes = Like::where('post_id', $post_id)->with('user')->get();
+
+        // // Return the list of users who liked the post
+        // return response()->json(['likes' => $likes]);
+
+        // return response()->json($like);
+
+    }
+
     public function show(Like $like)
     {
         //
 
-        return response()->json($like);
+        // return response()->json($like);
+
     }
 
     /**
