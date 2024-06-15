@@ -25,7 +25,6 @@ class LikeRequest extends FormRequest
             //
             'post_id' =>'required|exists:posts,id',
             'user_id' =>'required|exists:users,id',
-            // 'like' =>'required|boolean',
             
         ];
     }

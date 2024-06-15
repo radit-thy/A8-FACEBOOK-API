@@ -56,7 +56,7 @@ Route::prefix('likes')->group(function () {
     Route::post('/', [LikeController::class, 'index'])->middleware('auth:sanctum');
     Route::post('/like-post', [LikeController::class, 'likePost'])->middleware('auth:sanctum');
     Route::post('/unlike', [LikeController::class, 'UnlikePost'])->middleware('auth:sanctum');
-    Route::post('/delete-like', [LikeController::class, 'destroyPost'])->middleware('auth:sanctum');
+    Route::get('/show-like', [LikeController::class, 'show'])->middleware('auth:sanctum');
 });
 
 

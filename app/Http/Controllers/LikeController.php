@@ -21,36 +21,51 @@ class LikeController extends Controller
      * Store a newly created resource in storage.
      */
     // ==============================================
-                    // like post
+    // like post
     // ==============================================
-    public function likePost(LikeRequest $request, Like $like)
+    public function likePost(Request $request, Like $like)
     {
         //
+        $request->validate([
+            'post_id' => 'required|exists:posts,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        // Check if the like already exists
+        $like = Like::where('post_id', $request->post_id)
+            ->where('user_id', $request->user_id)
+            ->first();
+        if ($like) {
+            return response()->json(['message' => 'Post already liked'], 200);
+        }
+        // Create a new like
         $like = new Like();
         $like->post_id = $request->post_id;
         $like->user_id = $request->user_id;
         $like->save();
-
-        return response()->json(['data'=>$like,'message' => 'Like successful'], 200);   
-
+        return response()->json(['likes' => $like, 'message' => 'Like successful'], 201);
     }
 
     // ==============================================
-                    // Unlike post
+    // Unlike post
     // ==============================================
-    public function UnlikePost(LikeRequest $request)
+    public function UnlikePost(Request $request)
     {
-        //
+        $request->validate([
+            'post_id' => 'required|exists:posts,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        // Check if the like already exists
         $like = Like::where('post_id', $request->post_id)
             ->where('user_id', $request->user_id)
             ->first();
-
         if (!$like) {
-            return response()->json(['message' => 'Like not found'], 404);
+            return response()->json(['message' => 'Post Unlike already'], 404);
         }
+        // delete like from a post
         $like->delete();
         return response()->json(['message' => 'Unlike successful'], 200);
     }
+
 
     /**
      * Display the specified resource.
@@ -59,8 +74,7 @@ class LikeController extends Controller
     {
         //
 
-
-
+        return response()->json($like);
     }
 
     /**
@@ -77,11 +91,6 @@ class LikeController extends Controller
     public function destroyPost(Like $like, string $id)
     {
         //
-        $like = Like::find($id);
-        if (!$like) {
-            return response()->json(['message' => 'Like not found'], 404);
-        }
-        $like->delete();
-        return response()->json(['message' => 'Unlike successful'], 200);
+
     }
 }
