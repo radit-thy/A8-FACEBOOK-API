@@ -7,14 +7,28 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ProfileRescource;
+use App\Models\User;
+use App\Http\Resources\UserResource;
 
 class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, string $id)
     {
+        $users = UserResource::collection(User::all());
+        foreach ($users as $user) {
+            if ($user->id == $id) {
+                return response()->json([
+                    "message" => "view profile successfully",
+                    "success" => true,
+                    "data" => $user,
+                ]);
+            }
+        };
+        return response()->json(['message' => 'User id not found'], 500);
     }
 
     /**
@@ -45,14 +59,7 @@ class ProfileController extends Controller
             'data' => $pl,
         ]);
 
-        // return Str::random(30).".".$request->image->getClientOriginalExtension();
-
-
     }
-
-
-
-
 
     /**
      * Update the specified resource in storage.

@@ -39,3 +39,4 @@ Route::get('/getpost/{id}', [AuthController::class, 'getpost'])->middleware('aut
 // ..................Profile Router............................
 Route::post('/profile', [ProfileController::class, 'create'])->middleware('auth:sanctum');
 Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
+Route::get('/viewProfile/{id}', [ProfileController::class, 'index'])->middleware('auth:sanctum');
