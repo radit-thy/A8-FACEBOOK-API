@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class CommentController extends Controller
 {
@@ -28,43 +29,61 @@ class CommentController extends Controller
         return response()->json(["success"=>true, "data"=>$comment],200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comment $comment)
-    {
-        //
+
+    public function update (Request $request){
+        $comments = Comment::all();
+        for($i=0;$i<count($comments);$i++){
+            if($comments[$i]->id == $request->id){
+                $commentUpdate = $comments[$i]->update([
+                    'body' => $request->body,
+                ]);
+                return response()->json([
+                    "message"=>"Updated successfully",
+                    "success" => true,
+                    "comment"=>$comments[$i]
+                ]);
+            }
+        }
+        return response()->json([
+            "message"=>"The id not found",
+            "success" => false,
+        ]);
+        // return $comments;
+         
+     
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
+    public function destroy(string $id)
     {
-        //
+        $delete = Comment::find($id);
+        if($delete){
+            $delete->delete();
+            return response()->json([
+                "message"=>"Delete successfully",
+                "success" => true,
+                "comment"=>$delete
+            ]);
+        }
+        return response()->json([
+            "message"=>"The id not found",
+            "success" => false,
+        ]);
     }
+    public function show($postId)
+    {
+        $post = Post::findOrFail($postId);
+        $comments = $post->comments()->latest()->get();
+
+        return response()->json(['comments' => $comments]);
+    }
+
+     
 }
