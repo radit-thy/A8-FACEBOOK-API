@@ -51,6 +51,7 @@ Route::post('/upload', [ProfileController::class, 'updateProfile'])->middleware(
 Route::prefix('comments')->group(function () {
     Route::get('/comments', [CommentController::class, 'index']);
     Route::post('/create', [CommentController::class, 'create']);
+    Route::get('posts/{postId}/comments', [CommentController::class, 'index']);
     Route::put('/update', [CommentController::class, 'update']);
     Route::delete('/delete/{id}', [CommentController::class, 'destroy']);
 });
