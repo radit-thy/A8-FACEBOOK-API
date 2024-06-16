@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FriendRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,5 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
                         //    like router  //
 // //===================================================================
 
+Route::get('/friend', [FriendRequestController::class, 'index']);
+Route::post('/request/friend', [FriendRequestController::class, 'requestFriend'])->middleware('auth:sanctum');
