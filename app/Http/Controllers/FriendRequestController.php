@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FriendRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class FriendRequestController extends Controller
 {
@@ -44,7 +45,8 @@ class FriendRequestController extends Controller
             'receiver_id' =>'required'
         ]);
 
-        $status = FriendRequest::find($request->reveiver_id);
+        $status = User::where('id', $request->receiver_id)->first();
+
 
         if($status != ''){
             $friendRequest = new FriendRequest();
