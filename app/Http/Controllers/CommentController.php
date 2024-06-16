@@ -60,5 +60,22 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function destroy(string $id)
+    {
+        $delete = Comment::find($id);
+        if($delete){
+            $delete->delete();
+            return response()->json([
+                "message"=>"Delete successfully",
+                "success" => true,
+                "comment"=>$delete
+            ]);
+        }
+        return response()->json([
+            "message"=>"The id not found",
+            "success" => false,
+        ]);
+    }
 
+     
 }
