@@ -66,5 +66,7 @@ Route::prefix('likes')->group(function () {
 Route::prefix('comments')->group(function () {
     Route::get('/comments', [CommentController::class, 'index']);
     Route::post('/create', [CommentController::class, 'create']);
+    Route::put('/update/comment',[CommentController::class, 'update']);
+    Route::delete('/delete/{id}', [CommentController::class, 'destroy']);
 });
 Route::get('/viewProfile/{id}', [ProfileController::class, 'index'])->middleware('auth:sanctum');
