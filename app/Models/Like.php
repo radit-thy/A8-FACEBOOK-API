@@ -15,13 +15,14 @@ class Like extends Model
         "user_id",
 
     ];
-    public function post(): BelongsToMany
+    public function user()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function user(): BelongsToMany
+    // Define the relationship to the Post model
+    public function post()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(Post::class);
     }
 }
