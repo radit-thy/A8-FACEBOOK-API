@@ -94,9 +94,24 @@ class FriendRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FriendRequest $friendRequest)
+    public function confirmFriend(Request $request, string $id)
     {
-        //
+        $friend = FriendRequest::find($id);
+        if($friend){
+            if($friend->sender_id == $request->user()->id){
+                $friend->status = 'accepted';
+                $friend->save();
+                return response()->json([
+                   'message' => 'confirm friend successfully',
+                   'success' => true,
+                ]);
+            }
+        }
+
+        return response()->json([
+           'message' => 'confirm friend failed',
+           'success' => false,
+        ]);
     }
 
     /**

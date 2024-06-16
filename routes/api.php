@@ -52,3 +52,4 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 Route::get('/friend', [FriendRequestController::class, 'index']);
 Route::post('/request/friend', [FriendRequestController::class, 'requestFriend'])->middleware('auth:sanctum');
 Route::get('/friend/list', [FriendRequestController::class, 'listRequest'])->middleware('auth:sanctum');
+Route::put('/friend/confirm/{id}', [FriendRequestController::class, 'confirmFriend'])->middleware('auth:sanctum');
