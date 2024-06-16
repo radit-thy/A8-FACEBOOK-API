@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class CommentController extends Controller
 {
@@ -75,6 +76,13 @@ class CommentController extends Controller
             "message"=>"The id not found",
             "success" => false,
         ]);
+    }
+    public function show($postId)
+    {
+        $post = Post::findOrFail($postId);
+        $comments = $post->comments()->latest()->get();
+
+        return response()->json(['comments' => $comments]);
     }
 
      
