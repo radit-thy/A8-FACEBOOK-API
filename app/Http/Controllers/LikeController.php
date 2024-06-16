@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LikeRequest;
 use App\Models\Like;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -21,7 +22,7 @@ class LikeController extends Controller
      * Store a newly created resource in storage.
      */
     // ==============================================
-    // like post
+                    // like post
     // ==============================================
     public function likePost(Request $request, Like $like)
     {
@@ -42,11 +43,26 @@ class LikeController extends Controller
         $like->post_id = $request->post_id;
         $like->user_id = $request->user_id;
         $like->save();
-        return response()->json(['likes' => $like, 'message' => 'Like successful'], 201);
+
+        // Retrieve the post details
+        $post = Post::find($request->post_id);
+
+        // Return the response with the like and post details
+        return response()->json([
+            'like_details' => [
+                'user_id' => $like->user_id,
+                'post_id' => $like->post_id,
+            ],
+            'postDetails' => [
+                'post_title' => $post->title,
+                'post_description' => $post->description
+            ],
+            'message' => 'Like successful',
+        ], 201);
     }
 
     // ==============================================
-    // Unlike post
+                    // Unlike post
     // ==============================================
     public function UnlikePost(Request $request)
     {
@@ -63,34 +79,54 @@ class LikeController extends Controller
         }
         // delete like from a post
         $like->delete();
-        return response()->json(['message' => 'Unlike successful'], 200);
-    }
+        // show the post details
+        $post = Post::find($request->post_id);
 
+        // Return the response with the like and post details
+        return response()->json([
+            'Unlike_details' => [
+                'user_id' => $like->user_id,
+                'post_id' => $like->post_id,
+            ],
+            'postDetails' => [
+                'post_title' => $post->title,
+                'post_description' => $post->description
+            ],
+            'message' => 'Unlike successful'
+        ], 200);
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Like $like)
+    // ==============================================
+                // show like a post details
+    // ==============================================
+    public function showLike(Request $request, $post_id)
     {
-        //
+        // Validate the post_id
+        $post = Post::find($post_id);
+        if (!$post) {
+            return response()->json(['message' => 'Post not found'], 404);
+        }
+        // Retrieve likes for the post with user details
+        $likes = Like::where('post_id', $post_id)->with('user:id,name')->get();
+        // Extract user id and name from the likes
+        $userLikes = $likes->map(function ($like) {
+            return [
+                'user_id' => $like->user->id,
+                'user_name' => $like->user->name
+            ];
+        });
+        // Count the number of likes
+        $likeCount = $likes->count();
 
-        return response()->json($like);
-    }
+        // Return the list of users who liked the post and the count of likes
+        return response()->json([
+            'count_of_like' => $likeCount,
+            'users' => $userLikes,
+            'message' => 'Show like successful'
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(LikeRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroyPost(Like $like, string $id)
-    {
-        //
-
+        ]);
     }
 }
