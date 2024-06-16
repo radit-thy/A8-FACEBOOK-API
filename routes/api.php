@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,3 +73,7 @@ Route::prefix('comments')->group(function () {
     Route::delete('/delete/{id}', [CommentController::class, 'destroy']);
 });
 Route::get('/viewProfile/{id}', [ProfileController::class, 'index'])->middleware('auth:sanctum');
+
+
+Route::post('/forgotPassword', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/resetPassword', [ResetPasswordController::class, 'resetPassword']);
