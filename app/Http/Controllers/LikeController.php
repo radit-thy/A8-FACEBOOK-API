@@ -100,7 +100,7 @@ class LikeController extends Controller
      * Display the specified resource.
      */
     // ==============================================
-                // show like details
+                // show like a post details
     // ==============================================
     public function showLike(Request $request, $post_id)
     {
