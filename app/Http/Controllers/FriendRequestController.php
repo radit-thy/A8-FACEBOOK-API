@@ -114,11 +114,40 @@ class FriendRequestController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FriendRequest $friendRequest)
-    {
-        //
+
+
+   public function deleteFriend(Request $request, string $id){
+    $friend = FriendRequest::find($id);
+    if($friend){
+        if($friend->sender_id == $request->user()->id){
+            $friend->delete();
+            return response()->json([
+               'message' => 'delete friend successfully',
+               'success' => true,
+            ]);
+        }
     }
+
+    return response()->json([
+       'message' => 'delete friend failed',
+       'success' => false,
+    ]);
+   }
+   public function cancelFriend(Request $request, string $id){
+    $friend = FriendRequest::find($id);
+    if($friend){
+        if($friend->sender_id == $request->user()->id && $friend->status != 'pending'){
+            $friend->delete();
+            return response()->json([
+               'message' => 'delete friend successfully',
+               'success' => true,
+            ]);
+        }
+    }
+
+    return response()->json([
+       'message' => 'delete friend failed',
+       'success' => false,
+    ]);
+   }
 }
