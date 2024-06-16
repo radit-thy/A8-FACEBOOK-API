@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+<<<<<<< HEAD
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+=======
+use App\Http\Controllers\FriendRequestController;
+>>>>>>> friend_request
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +67,7 @@ Route::prefix('likes')->group(function () {
     Route::get('/show-like/{id}', [LikeController::class, 'showLike'])->middleware('auth:sanctum');
 });
 
+<<<<<<< HEAD
 
 // ..................Comment Router............................
 Route::prefix('comments')->group(function () {
@@ -77,3 +82,11 @@ Route::get('/viewProfile/{id}', [ProfileController::class, 'index'])->middleware
 
 Route::post('/forgotPassword', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/resetPassword', [ResetPasswordController::class, 'resetPassword']);
+=======
+Route::get('/friend', [FriendRequestController::class, 'index']);
+Route::post('/request/friend', [FriendRequestController::class, 'requestFriend'])->middleware('auth:sanctum');
+Route::get('/friend/list', [FriendRequestController::class, 'listRequest'])->middleware('auth:sanctum');
+Route::put('/friend/confirm/{id}', [FriendRequestController::class, 'confirmFriend'])->middleware('auth:sanctum');
+Route::delete('/friend/delete/{id}', [FriendRequestController::class, 'deleteFriend'])->middleware('auth:sanctum');
+Route::delete('/friend/cancel/{id}', [FriendRequestController::class, 'cancelFriend'])->middleware('auth:sanctum');
+>>>>>>> friend_request
